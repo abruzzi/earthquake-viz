@@ -1,0 +1,23 @@
+{
+  "name": "earthquake",
+  "version": "0.0.0",
+  "authors": [
+    "Qiu Juntao <juntao.qiu@gmail.com>"
+  ],
+  "description": "earthquake gis",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jslider": "*",
+    "openlayers": "2.*",
+    "jquery": "1.10.*"
+  }
+}
