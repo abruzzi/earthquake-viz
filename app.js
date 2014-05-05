@@ -15,33 +15,56 @@ $(function() {
     
     var style = new OpenLayers.Style();
 
-    var ruleLow = new OpenLayers.Rule({
-        filter: new OpenLayers.Filter.Function({
-            evaluate: function(properties) {
-                return properties.mag < 3.0;
+    var rules = [
+        new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Function({
+                evaluate: function(properties) {
+                    return properties.mag < 3.0;
+                }
+            }),
+            symbolizer: {
+            pointRadius: 3, fillColor: "green",
+            fillOpacity: 0.5, strokeColor: "black"
+            }
+        }),  
+        new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Function({
+                evaluate: function(properties) {
+                    return properties.mag >= 3.0 && properties.mag < 5.0;
+                }
+            }),
+            symbolizer: {
+            pointRadius: 5, fillColor: "orange",
+            fillOpacity: 0.5, strokeColor: "black"
+            }
+        }),  
+        new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Function({
+                evaluate: function(properties) {
+                    return properties.mag >= 5.0;
+                }
+            }),
+            symbolizer: {
+            pointRadius: 7, fillColor: "red",
+            fillOpacity: 0.5, strokeColor: "black"
             }
         }),
-        symbolizer: {pointRadius: 3, fillColor: "green",
-            fillOpacity: 0.5, strokeColor: "black"}
+    ];
+
+    style.addRules(rules);
+
+    earthquake.styleMap = new OpenLayers.StyleMap({
+        'default': style,
+        'select': new OpenLayers.Style({
+            fillColor: "#66ccff",
+            strokeColor: "#3399ff"
+        })
     });
-
-    var ruleHigh = new OpenLayers.Rule({
-        filter: new OpenLayers.Filter.Function({
-            evaluate: function(properties) {
-                return properties.mag >= 3.0;
-            }
-        }),
-        symbolizer: {pointRadius: 5, fillColor: "red",
-            fillOpacity: 0.7, strokeColor: "black"}
-    });
-
-    style.addRules([ruleLow, ruleHigh]);
-
-    earthquake.styleMap = new OpenLayers.StyleMap(style);
 
     var selectControl = new OpenLayers.Control.SelectFeature(earthquake, {
         onSelect: onFeatureSelect,
-        onUnselect: onFeatureUnselect 
+        onUnselect: onFeatureUnselect,
+        hover: true
     });
 
     map.addControl(selectControl);
